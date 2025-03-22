@@ -1,4 +1,3 @@
-// Bro wtf even is this
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,337 +6,693 @@
     <title>NexusC2 - Command & Control Framework</title>
     <style>
         :root {
-            --primary-color: #0d0d0d;
-            --secondary-color: #111111;
-            --accent-color: #1a0000;
-            --accent-light: #990000;
-            --accent-hover: #cc0000;
-            --text-color: #c0c0c0;
-            --text-muted: #707070;
+            --primary-color: #0a0a0a;
+            --secondary-color: #121212;
+            --accent-color: #1a1a1a;
+            --accent-light: #8b0000;
+            --accent-hover: #ff0000;
+            --text-color: #cccccc;
+            --text-muted: #777777;
             --dark-bg: #000000;
-            --card-bg: #1a1a1a;
-            --code-bg: #0a0a0a;
-            --code-color: #d4d4d4;
-            --border-color: #2a0000;
-            --success-color: #530000;
-            --warning-color: #900000;
+            --card-bg: #141414;
+            --code-bg: #0d0d0d;
+            --code-color: #f8f8f2;
+            --border-color: #282828;
+            --success-color: #006400;
+            --warning-color: #8b0000;
             --danger-color: #ff0000;
-            --shadow-sm: 0 2px 4px rgba(255, 0, 0, 0.1);
-            --shadow-md: 0 4px 8px rgba(255, 0, 0, 0.15);
-            --shadow-lg: 0 8px 16px rgba(255, 0, 0, 0.2);
+            --header-height: 60px;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.7);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.9);
+            --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+            --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 0px;
         }
-
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            background-color: var(--dark-bg);
+            font-family: var(--font-sans);
+            line-height: 1.6;
             color: var(--text-color);
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23300000' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-            background-attachment: fixed;
+            background-color: var(--dark-bg);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23111111' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M0 20L20 0v20H0zm20 0l20-20v20H20z'/%3E%3C/g%3E%3C/svg%3E");
         }
-
-        .header {
-            background-color: var(--primary-color);
-            border-bottom: 1px solid #ff0000;
-            box-shadow: 0 2px 10px rgba(255, 0, 0, 0.3);
+        
+        a {
+            text-decoration: none;
+            color: var(--accent-hover);
+            transition: var(--transition);
         }
-
-        .header-logo {
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
-            font-weight: 900;
-            letter-spacing: 1px;
-        }
-
-        .header-logo span {
-            background: linear-gradient(135deg, #ff0000, #990000);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: bold;
-        }
-
-        .header-button {
-            background-color: #300000;
-            color: #ffffff;
-            border: 1px solid #550000;
+        
+        a:hover {
+            color: #ff3333;
             text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
         }
-
-        .header-button:hover {
-            background-color: var(--accent-hover);
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-            border-color: #ff0000;
+        
+        .container {
+            display: flex;
+            position: relative;
+            min-height: 100vh;
         }
-
-        nav {
-            background-color: var(--primary-color);
-            border-right: 1px solid #550000;
-            box-shadow: 2px 0 10px rgba(255, 0, 0, 0.2);
-        }
-
-        nav .nav-section {
-            color: #ff3333;
-            border-bottom: 1px dotted #550000;
-            padding-bottom: 4px;
-            margin-bottom: 12px;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-        }
-
-        nav .nav-link {
-            color: var(--text-color);
-            border-left: 3px solid transparent;
-        }
-
-        nav .nav-link:hover {
-            background-color: #300000;
-            color: #ffffff;
-            border-left: 3px solid #ff0000;
-        }
-
-        nav .nav-link.active {
-            background-color: #200000;
-            color: #ff3333;
-            border-left: 3px solid #ff0000;
-            font-weight: 500;
-        }
-
-        nav::-webkit-scrollbar-thumb {
-            background-color: #550000;
-        }
-
-        .section-header {
-            border-bottom: 1px solid #550000;
-        }
-
-        .section-header:after {
-            background: linear-gradient(to right, #ff0000, #550000);
-        }
-
-        .section-header h1 {
-            background: linear-gradient(to right, #ffffff, #ff3333);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
-            font-size: 2.3rem;
-        }
-
-        .subtitle {
-            color: #999999;
-        }
-
-        h2 {
-            color: #d4d4d4;
-            border-bottom: 1px solid #550000;
-            padding-bottom: 0.5rem;
-        }
-
-        h3 {
-            color: #ff3333;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid #550000;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        }
-
-        .card:hover {
-            border-color: #ff0000;
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
-        }
-
-        pre {
-            background-color: var(--code-bg);
-            border: 1px solid #550000;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .code-header {
-            background-color: #200000;
-            border-bottom: 1px solid #550000;
-        }
-
-        .copy-button:hover {
-            background-color: #550000;
-        }
-
-        table {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        th {
-            background-color: #200000;
-            color: #d4d4d4;
-            text-shadow: 0 0 3px rgba(255, 0, 0, 0.3);
-        }
-
-        tbody tr {
-            background-color: var(--card-bg);
-        }
-
-        tbody tr:hover {
-            background-color: #300000;
-        }
-
-        td, th {
-            border-bottom: 1px solid #550000;
-        }
-
-        .btn {
-            background-color: #550000;
-            color: #ffffff;
-            border: 1px solid transparent;
-            text-shadow: 0 0 3px rgba(255, 0, 0, 0.5);
-        }
-
-        .btn:hover {
-            background-color: #800000;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-            border-color: #cc0000;
-        }
-
-        .btn-primary {
-            background-color: #990000;
-        }
-
-        .btn-primary:hover {
-            background-color: #cc0000;
-        }
-
-        .alert {
-            border-left: 5px solid transparent;
-        }
-
-        .alert-danger {
-            background-color: rgba(80, 0, 0, 0.3);
-            border-color: #ff0000;
-        }
-
-        .alert-warning {
-            background-color: rgba(80, 40, 0, 0.3);
-            border-color: #cc3000;
-        }
-
-        .alert-info {
-            background-color: rgba(30, 30, 40, 0.3);
-            border-color: #880000;
-        }
-
-        .tag {
-            background-color: #550000;
-            color: #d4d4d4;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .tag:hover {
-            background-color: #800000;
-            color: #ffffff;
-        }
-
-        .dropdown-toggle::after {
-            color: #ff0000;
-        }
-
-        .highlight .keyword { color: #ff5555; }
-        .highlight .string { color: #ffaa55; }
-        .highlight .comment { color: #707070; }
-        .highlight .function { color: #aaff99; }
-        .highlight .number { color: #ff88ff; }
-        .highlight .operator { color: #ff5555; }
-        .highlight .class { color: #88ddff; }
-
-        .code-keyword { color: #ff5555; font-weight: bold; }
-        .code-string { color: #ffaa55; }
-        .code-number { color: #ff88ff; }
-        .code-function { color: #aaff99; }
-        .code-type { color: #88ddff; }
-        .code-operator { color: #ff5555; }
-        .code-comment { color: #707070; }
-
-        .interactive-demo {
-            border: 1px solid #550000;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        .demo-header {
-            background-color: #200000;
-            border-bottom: 1px solid #550000;
-        }
-
-        .demo-content {
-            background-color: var(--card-bg);
-        }
-
-        .demo-output {
-            background-color: var(--code-bg);
-            border-top: 1px solid #550000;
-            color: #d4d4d4;
-        }
-
-      .coming-soon {
-            background: linear-gradient(135deg, #550000, #220000);
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2);
-        }
-
-        .glow {
-            text-shadow: 0 0 5px #ff0000;
-        }
-
-        .section-header h1::after {
-            content: "";
-            display: block;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(to right, #ff0000, transparent);
-            margin-top: 5px;
-        }
-
-        .nav-link:hover {
-            transition: all 0.2s ease;
-            transform: translateX(3px);
-        }
-
-        body::after {
-            content: "";
+        
+        /* Header */
+        .header {
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            height: var(--header-height);
+            background-color: var(--primary-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            box-shadow: 0 2px 10px rgba(255, 0, 0, 0.2);
+            border-bottom: 1px solid #330000;
+        }
+        
+        .header-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            letter-spacing: 1px;
+        }
+        
+        .header-logo span {
+            background: linear-gradient(135deg, #ff0000, #8b0000);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-left: 6px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+        
+        .header-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 16px;
+        }
+        
+        .header-button {
+            background-color: #1f0000;
+            color: white;
+            border: 1px solid #600;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .header-button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+        }
+        
+        .header-button i {
+            font-size: 1rem;
+        }
+        
+        /* Navigation */
+        nav {
+            width: 280px;
+            background-color: var(--primary-color);
+            position: fixed;
+            height: calc(100vh - var(--header-height));
+            top: var(--header-height);
+            left: 0;
+            overflow-y: auto;
+            padding: 24px 0;
+            box-shadow: inset -5px 0 10px rgba(0, 0, 0, 0.8);
+            z-index: 900;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) var(--primary-color);
+            border-right: 1px solid #330000;
+        }
+        
+        nav::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        nav::-webkit-scrollbar-track {
+            background: var(--primary-color);
+        }
+        
+        nav::-webkit-scrollbar-thumb {
+            background-color: #500;
+            border-radius: 0;
+        }
+        
+        nav ul {
+            list-style: none;
+            padding: 0 16px;
+        }
+        
+        nav .nav-section {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ff0000;
+            margin-top: 24px;
+            margin-bottom: 8px;
+            padding-left: 16px;
+            font-weight: 600;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+        }
+        
+        nav .nav-section:first-child {
+            margin-top: 0;
+        }
+        
+        nav .nav-item {
+            margin-bottom: 2px;
+        }
+        
+        nav .nav-link {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-left: 2px solid transparent;
+        }
+        
+        nav .nav-link:hover {
+            background-color: #300;
+            color: white;
+            border-left: 2px solid #ff0000;
+        }
+        
+        nav .nav-link.active {
+            background-color: #500;
+            color: white;
+            font-weight: 500;
+            border-left: 2px solid #ff0000;
+        }
+        
+        nav .nav-subsection {
+            padding-left: 16px;
+        }
+        
+        nav .nav-subsection .nav-link {
+            font-size: 0.9rem;
+            padding: 6px 16px;
+        }
+        
+        /* Dropdown Menus */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-toggle {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .dropdown-toggle::after {
+            content: '▼';
+            font-size: 0.6rem;
+            margin-left: 8px;
+            transition: var(--transition);
+            color: #ff0000;
+        }
+        
+        .dropdown.open .dropdown-toggle::after {
+            transform: rotate(180deg);
+        }
+        
+        .dropdown-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .dropdown.open .dropdown-menu {
+            max-height: 1000px; /* Arbitrary large value */
+            transition: max-height 0.5s ease-in;
+        }
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 40px;
+            margin-left: 280px;
+            margin-top: var(--header-height);
+            max-width: 1000px;
+        }
+        
+        /* Section Styles */
+        .section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.5s ease-out;
+            display: none; /* Hide all sections by default */
+        }
+        
+        .section.active {
+            display: block; /* Show only active section */
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-header {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #500;
+            position: relative;
+        }
+        
+        .section-header:after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, #ff0000, #8b0000);
+            border-radius: 0;
+        }
+        
+        .section-header h1 {
+            margin-bottom: 16px;
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #fff, #ff0000);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--text-color);
+            margin-top: 1.5em;
+            margin-bottom: 0.8em;
+            line-height: 1.3;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #300;
+            margin-top: 2.5rem;
+            color: #ff0000;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 2rem;
+            color: #cc0000;
+        }
+        
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            color: #aa0000;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: 20px 0;
+            font-size: 0.95rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid #300;
+            position: relative;
+        }
+        
+        code {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+        
+        /* Copy Button for Code Blocks */
+        .code-header {
+            display: flex;
+            justify-content: flex-end;
+            padding: 8px 16px;
+            background-color: #1a0000;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            border-bottom: 1px solid #300;
+        }
+        
+        .copy-button {
+            background-color: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 0;
+            transition: var(--transition);
+        }
+        
+        .copy-button:hover {
+            color: #ff0000;
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+        
+        /* Tables */
+        table {
             width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.03),
-                rgba(0, 0, 0, 0.03) 1px,
-                transparent 1px,
-                transparent 2px
-            );
-            pointer-events: none;
-            z-index: 9999;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 24px 0;
+            box-shadow: var(--shadow-md);
+            border-radius: var(--border-radius);
+            overflow: hidden;
         }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+        
+        th, td {
+            padding: 14px 20px;
+            text-align: left;
+            border-bottom: 1px solid #300;
         }
-
-        ::-webkit-scrollbar-track {
-            background: #0d0d0d;
+        
+        th {
+            background-color: #1a0000;
+            font-weight: 600;
+            color: white;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
-
-        ::-webkit-scrollbar-thumb {
-            background: #550000;
-            border-radius: 4px;
+        
+        tr:last-child td {
+            border-bottom: none;
         }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #800000;
+        
+        tbody tr {
+            background-color: var(--card-bg);
+            transition: var(--transition);
         }
-
-        /* Progress bar animation */
+        
+        tbody tr:hover {
+            background-color: rgba(255, 0, 0, 0.05);
+        }
+        
+        /* Cards */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 24px;
+            border: 1px solid #300;
+            transition: var(--transition);
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.15);
+            border-color: #600;
+        }
+        
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #300;
+            padding-bottom: 12px;
+        }
+        
+        /* Lists */
+        ul, ol {
+            padding-left: 24px;
+            margin-bottom: 24px;
+        }
+        
+        ul li, ol li {
+            margin-bottom: 8px;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: #300;
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            margin-right: 12px;
+            border: 1px solid #600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+        }
+        
+        .btn-primary {
+            background-color: #600;
+        }
+        
+        .btn-secondary {
+            background-color: #300;
+        }
+        
+        .btn-success {
+            background-color: #004d00;
+        }
+        
+        .btn-warning {
+            background-color: #600;
+        }
+        
+        .btn-danger {
+            background-color: #8b0000;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        /* Alerts */
+        .alert {
+            border-radius: var(--border-radius);
+            padding: 16px 20px;
+            margin: 24px 0;
+            position: relative;
+            border-left: 5px solid transparent;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .alert-warning {
+            border-color: var(--warning-color);
+            background-color: rgba(139, 0, 0, 0.1);
+        }
+        
+        .alert-danger {
+            border-color: var(--danger-color);
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+        
+        .alert-info {
+            border-color: #500;
+            background-color: rgba(85, 0, 0, 0.1);
+        }
+        
+        .alert-success {
+            border-color: #006400;
+            background-color: rgba(0, 100, 0, 0.1);
+        }
+        
+        /* Tags */
+        .tag {
+            display: inline-block;
+            background-color: #300;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 0;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            transition: var(--transition);
+            border: 1px solid #500;
+        }
+        
+        .tag:hover {
+            background-color: #600;
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+        }
+        
+        /* Syntax Highlighting (simplified) */
+        .highlight .keyword { color: #ff3333; }
+        .highlight .string { color: #cccccc; }
+        .highlight .comment { color: #777777; }
+        .highlight .function { color: #cc0000; }
+        .highlight .number { color: #ffffff; }
+        .highlight .operator { color: #ff3333; }
+        .highlight .class { color: #ff6666; }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            main {
+                padding: 30px;
+                max-width: 100%;
+            }
+        }
+        
+        
+        @media (max-width: 768px) {
+            nav {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                width: 260px;
+            }
+            
+            nav.open {
+                transform: translateX(0);
+            }
+            
+            main {
+                margin-left: 0;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+            
+        }
+        
+        /* Mobile Menu Toggle */
+        .nav-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-right: 16px;
+            display: none;
+        }
+        
+        /* Utilities */
+        .mt-0 { margin-top: 0 !important; }
+        .mb-0 { margin-bottom: 0 !important; }
+        .text-center { text-align: center; }
+        .d-flex { display: flex; }
+        .align-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .flex-wrap { flex-wrap: wrap; }
+        .gap-2 { gap: 8px; }
+        .gap-4 { gap: 16px; }
+        
+        /* Code highlighting */
+        .code-comment { color: #777777; }
+        .code-keyword { color: #ff3333; font-weight: bold; }
+        .code-string { color: #cccccc; }
+        .code-number { color: #ffffff; }
+        .code-function { color: #cc0000; }
+        .code-type { color: #ff6666; }
+        .code-operator { color: #ff3333; }
+        .code-variable { color: #f8f8f2; }
+        .code-punctuation { color: #f8f8f2; }
+        
+        /* Transitions and Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* Dark mode toggle */
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
+            transition: var(--transition);
+        }
+        
+        .dark-mode-toggle:hover {
+            background-color: rgba(255, 0, 0, 0.1);
+            color: #ff0000;
+        }
+        
+        /* Icons (using Unicode symbols for simplicity) */
+        .icon-menu::before { content: '☰'; }
+        .icon-download::before { content: '⬇'; }
+        .icon-github::before { content: '⚙'; }
+        .icon-moon::before { content: '☾'; }
+        .icon-sun::before { content: '☀'; }
+        .icon-code::before { content: '</>'; }
+        .icon-copy::before { content: '📋'; }
+        
+        /* Progress bar animation for code examples */
         .progress-bar {
-            background: linear-gradient(to right, #ff0000, #990000);
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            height: 3px;
+            background: linear-gradient(to right, #ff0000, #8b0000);
+            width: 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            animation: progress 6s ease-out;
         }
         
         @keyframes progress {
@@ -347,24 +702,25 @@
         
         /* Interactive examples */
         .interactive-demo {
-            border: 1px solid var(--border-color);
+            border: 1px solid #300;
             border-radius: var(--border-radius);
             overflow: hidden;
             margin: 24px 0;
         }
         
         .demo-header {
-            background-color: var(--secondary-color);
+            background-color: #1a0000;
             padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid #300;
         }
         
         .demo-title {
             font-weight: 600;
             font-size: 1rem;
+            color: #ff0000;
         }
         
         .demo-content {
@@ -375,35 +731,72 @@
         .demo-output {
             padding: 16px;
             background-color: var(--code-bg);
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid #300;
             font-family: var(--font-mono);
             font-size: 0.9rem;
             min-height: 60px;
             white-space: pre;
             overflow-x: auto;
             line-height: 1.4;
+            color: #bbbbbb;
         }
 
         /* Coming Soon Banner */
         .coming-soon {
-            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            background: linear-gradient(135deg, #500, #300);
             color: white;
             padding: 30px;
             border-radius: var(--border-radius);
             margin: 30px 0;
             text-align: center;
             box-shadow: var(--shadow-md);
+            border: 1px solid #600;
         }
         
         .coming-soon h2 {
             border-bottom: none;
             margin-top: 0;
             font-size: 1.8rem;
+            color: white;
         }
         
         .coming-soon p {
             margin-bottom: 0;
             opacity: 0.9;
+        }
+        
+        /* Blood drip effect for sections */
+        .section::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            width: 2px;
+            height: 10px;
+            background-color: #ff0000;
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+        
+        /* Pulsating effect for danger elements */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
+        
+        .alert-danger {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Terminal cursor effect */
+        .terminal-text::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+        }
+        
+        @keyframes blink {
+            from, to { opacity: 0; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
@@ -413,7 +806,7 @@
             <span class="icon-menu"></span>
         </button>
         <div class="header-logo">
-            C2<span>Matrix</span>
+            Nexus<span>C2</span>
         </div>
         <div class="header-actions">
             <button class="dark-mode-toggle" aria-label="Toggle dark mode">
@@ -511,16 +904,16 @@
             <section id="overview" class="section active">
                 <div class="section-header">
                     <h1>NexusC2 Framework</h1>
-                    <p class="subtitle">Professional command and control framework for educational purposes and penetration testing</p>
+                    <p class="subtitle">Command and control framework</p>
                 </div>
                 
                 <div class="card">
-                    <p>NexusC2 is an advanced command and control framework designed for cybersecurity professionals, penetration testers, and educational environments. The framework provides a comprehensive set of tools for creating, deploying, and managing a network of client systems ("zombies") that can be controlled from a central server.</p>
+                    <p>NexusC2 is a command and control framework designed for cybersecurity, penetration testers, and threat actors. The framework provides a comprehensive set of tools for creating, deploying, and managing a network of client systems ("zombies") that can be controlled from a central server.</p>
                 
-                    <p>Whether you're conducting authorized security assessments, researching defense mechanisms, or learning about network security, NexusC2 provides the infrastructure you need with enterprise-grade encryption, advanced evasion capabilities, and intuitive control interfaces.</p>
+                    <p>Whether you're conducting authorized security assessments, researching defense mechanisms, or establishing persistent access, NexusC2 provides the infrastructure you need with military-grade encryption, evasion capabilities, and intuitive control interfaces.</p>
 
-                    <div class="alert alert-warning">
-                        <strong>Important:</strong> This framework is intended for legitimate security research, authorized penetration testing, and educational purposes only. Unauthorized use against systems without explicit permission is illegal and unethical.
+                    <div class="alert alert-danger">
+                        <strong>WARNING:</strong> This framework grants significant power over compromised systems. Misuse against systems without explicit permission is illegal and will result in severe consequences.
                     </div>
                 </div>
                 
@@ -562,7 +955,8 @@ zombies = response.json()[<span class="code-string">"zombies"</span>]
         json={<span class="code-string">"zombie_id"</span>: zombie_id, <span class="code-string">"command"</span>: command}
     )</code></pre>
                     </div>
-                    <div class="demo-output">> Running controller with server at http://127.0.0.1:5000
+                    <div class="demo-output" style="color: #ff0000;">
+> Running controller with server at http://127.0.0.1:5000
 > Found 3 active zombies
 > Sending command 'whoami' to zombie_3a7b9f2c
 > Command successfully queued for execution
@@ -573,12 +967,12 @@ zombies = response.json()[<span class="code-string">"zombies"</span>]
             <section id="features" class="section">
                 <div class="section-header">
                     <h1>Key Features</h1>
-                    <p class="subtitle">Explore the powerful capabilities of the NexusC2 framework</p>
+                    <p class="subtitle">Explore the devastating capabilities of the NexusC2 framework</p>
                 </div>
                 
                 <div class="card">
                     <h3>Secure Command & Control</h3>
-                    <p>NexusC2 implements enterprise-grade encryption for all communications between the server and clients. RSA key exchange is used to establish secure channels, with AES encryption for all command transmissions, ensuring that sensitive operations remain confidential.</p>
+                    <p>NexusC2 implements military-grade encryption for all communications between the server and clients. RSA key exchange is used to establish secure channels, with AES encryption for all command transmissions, ensuring that your operations remain undetected.</p>
                     
                     <div class="d-flex flex-wrap gap-2">
                         <div class="tag">RSA Encryption</div>
@@ -589,8 +983,8 @@ zombies = response.json()[<span class="code-string">"zombies"</span>]
                 </div>
                 
                 <div class="card">
-                    <h3>Advanced Deployment Options</h3>
-                    <p>Deploy zombies across multiple platforms with customizable options for persistence, stealth, and communication. The build system supports obfuscation techniques to avoid detection while maintaining reliable command execution.</p>
+                    <h3>More Deployment Options</h3>
+                    <p>Deploy zombies across multiple platforms with customizable options for persistence, stealth, and communication. The build system supports obfuscation techniques to evade detection while maintaining reliable command execution.</p>
                     
                     <div class="d-flex flex-wrap gap-2">
                         <div class="tag">Cross-Platform</div>
@@ -626,8 +1020,8 @@ zombies = response.json()[<span class="code-string">"zombies"</span>]
                 </div>
                 
                 <div class="card">
-                    <h3>Advanced Attack Modules</h3>
-                    <p>The framework includes specialized modules for advanced operations, such as the Distributed Denial of Service (DDoS) module that can coordinate attacks across multiple zombies for testing infrastructure resilience.</p>
+                    <h3>Attack Modules</h3>
+                    <p>The framework includes specialized modules for advanced operations, such as the Distributed Denial of Service (DDoS) module that can coordinate devastating attacks across multiple zombies for maximum impact.</p>
                     
                     <div class="d-flex flex-wrap gap-2">
                         <div class="tag">DDoS Module</div>
@@ -653,11 +1047,11 @@ zombies = response.json()[<span class="code-string">"zombies"</span>]
             <section id="installation" class="section">
                 <div class="section-header">
                     <h1>Installation</h1>
-                    <p class="subtitle">Set up the NexusC2 framework on your system</p>
+                    <p class="subtitle">Set up the C2Matrix framework on your system</p>
                 </div>
                 
                 <h2>System Requirements</h2>
-                <p>Before installing NexusC2, ensure your system meets the following requirements:</p>
+                <p>Before installing C2Matrix, ensure your system meets the following requirements:</p>
                 
                 <div class="card">
                     <h3>Server Requirements</h3>
@@ -677,7 +1071,7 @@ zombies = response.json()[<span class="code-string">"zombies"</span>]
                         <li>Python 3.6 or higher</li>
                         <li>Cryptography Python package</li>
                         <li>Requests Python package</li>
-                        <li>Platform-specific dependencies for advanced features</li>
+                        <li>Platform-specific dependencies for more features</li>
                     </ul>
                 </div>
                 
@@ -694,8 +1088,8 @@ zombies = response.json()[<span class="code-string">"zombies"</span>]
                 <h2>Installation Steps</h2>
                 
                 <h3>1. Clone the Repository</h3>
-                <pre><code class="highlight">git clone https://github.com/your-username/NexusC2.git
-cd NexusC2</code></pre>
+                <pre><code class="highlight">git clone https://github.com/your-username/c2matrix.git
+cd c2matrix</code></pre>
                 
                 <h3>2. Install Dependencies</h3>
                 <pre><code class="highlight"><span class="code-comment"># Server dependencies</span>
@@ -738,7 +1132,7 @@ python master.py
             <section id="quickstart" class="section">
                 <div class="section-header">
                     <h1>Quickstart Guide</h1>
-                    <p class="subtitle">Get up and running with NexusC2 in minutes</p>
+                    <p class="subtitle">Get up and running with C2Matrix in minutes</p>
                 </div>
                 
                 <p>This quickstart guide will walk you through setting up a basic C2 server, creating a zombie, and executing your first command.</p>
@@ -815,7 +1209,7 @@ python build.py --platform windows --server http://127.0.0.1:5000 --output ./dis
                 
                 <div class="btn-group">
                     <a href="#server-setup" class="btn btn-primary nav-btn" data-section="server-setup">Server Setup Details</a>
-                    <a href="#zombie-creation" class="btn nav-btn" data-section="zombie-creation">Advanced Zombie Creation</a>
+                    <a href="#zombie-creation" class="btn nav-btn" data-section="zombie-creation">Zombie Creation</a>
                 </div>
             </section>
             
@@ -826,7 +1220,7 @@ python build.py --platform windows --server http://127.0.0.1:5000 --output ./dis
                 </div>
                 
                 <h2>Server Architecture</h2>
-                <p>The NexusC2 server is built on Flask with a SQLite database backend. The server handles authentication, command distribution, and result collection from zombies through a RESTful API.</p>
+                <p>The C2Matrix server is built on Flask with a SQLite database backend. The server handles authentication, command distribution, and result collection from zombies through a RESTful API.</p>
                 
                 <div class="card">
                     <h3>Core Components</h3>
@@ -837,7 +1231,7 @@ python build.py --platform windows --server http://127.0.0.1:5000 --output ./dis
                     </ul>
                 </div>
                 
-                <h2>Advanced Configuration</h2>
+                <h2>Configuration</h2>
                 <p>The server can be configured through command-line arguments or by editing the <code>server_config.json</code> file.</p>
                 
                 <pre><code class="highlight"><span class="code-comment"># Example server_config.json</span>
@@ -923,11 +1317,11 @@ python build.py --platform windows --server http://127.0.0.1:5000 --output ./dis
             <section id="database-config" class="section">
                 <div class="section-header">
                     <h1>Database Configuration</h1>
-                    <p class="subtitle">Optimizing the NexusC2 database for scalability and performance</p>
+                    <p class="subtitle">Optimizing the C2Matrix database for scalability and performance</p>
                 </div>
                 
                 <h2>Database Schema</h2>
-                <p>NexusC2 uses SQLite for data persistence. The database schema includes several key tables that store information about zombies, commands, results, and system status.</p>
+                <p>C2Matrix uses SQLite for data persistence. The database schema includes several key tables that store information about zombies, commands, results, and system status.</p>
                 
                 <div class="card">
                     <h3>Core Tables</h3>
@@ -1065,7 +1459,7 @@ python build.py --platform windows --server http://127.0.0.1:5000 --output ./dis
                 </div>
                 
                 <h2>Access Methods Overview</h2>
-                <p>NexusC2 supports multiple methods for making your server accessible from external networks, each with different security implications and use cases.</p>
+                <p>C2Matrix supports multiple methods for making your server accessible from external networks, each with different security implications and use cases.</p>
                 
                 <div class="card">
                     <h3>Direct IP Access</h3>
@@ -1113,7 +1507,7 @@ python server_setup.py --tor</code></pre>
                         <li>Add the following to your torrc file:</li>
                     </ol>
                     
-                    <pre><code class="highlight">HiddenServiceDir /path/to/NexusC2/hidden_service
+                    <pre><code class="highlight">HiddenServiceDir /path/to/c2matrix/hidden_service
 HiddenServicePort 80 127.0.0.1:5000</code></pre>
                     
                     <li>Restart the Tor service</li>
@@ -1142,7 +1536,7 @@ server {
     }
 }</code></pre>
                     
-                    <p>The NexusC2 server automatically detects when it's running behind a proxy via the ProxyFix middleware.</p>
+                    <p>The C2Matrix server automatically detects when it's running behind a proxy via the ProxyFix middleware.</p>
                 </div>
                 
                 <div class="card">
@@ -1184,7 +1578,7 @@ python build.py --server "https://primary-domain.com,http://backup-ip.com:8080,v
                     <h3>Core Components</h3>
                     <ul>
                         <li><strong>zombie.py</strong> - Base Python implementation of the zombie client</li>
-                        <li><strong>build.py</strong> - Advanced build system for creating customized zombies</li>
+                        <li><strong>build.py</strong> - Build system for creating customized zombies</li>
                         <li><strong>dos_module.py</strong> - Optional DDoS attack module</li>
                     </ul>
                 </div>
@@ -1324,7 +1718,7 @@ python build.py --platform python --server https://your-server.com</code></pre>
                 </div>
                 
                 <h2>Deployment Methodologies</h2>
-                <p>NexusC2 supports multiple deployment approaches for different testing scenarios and target environments.</p>
+                <p>C2Matrix supports multiple deployment approaches for different testing scenarios and target environments.</p>
                 
                 <div class="card">
                     <h3>Direct Execution Deployment</h3>
@@ -1379,7 +1773,7 @@ $command = "powershell.exe -EncodedCommand $encoded"</code></pre>
                 </div>
                 
                 <h2>Persistence Mechanisms</h2>
-                <p>NexusC2 implements multiple persistence techniques to maintain access across system reboots.</p>
+                <p>C2Matrix implements multiple persistence techniques to maintain access across system reboots.</p>
                 
                 <div class="card">
                     <h3>Windows Persistence</h3>
@@ -1615,7 +2009,7 @@ rm -f "$0" &>/dev/null
                 </div>
                 
                 <h2>Command Architecture</h2>
-                <p>The NexusC2 framework implements a sophisticated command execution architecture that ensures reliable, secure, and efficient command processing.</p>
+                <p>The C2Matrix framework implements a sophisticated command execution architecture that ensures reliable, secure, and efficient command processing.</p>
                 
                 <div class="card">
                     <h3>Command Flow</h3>
@@ -1979,7 +2373,7 @@ Start attack? (y/n): _</div>
                 </div>
                 
                 <h2>Zombie Monitoring System</h2>
-                <p>The NexusC2 framework provides comprehensive monitoring capabilities for tracking the status, activity, and performance of your zombie network.</p>
+                <p>The C2Matrix framework provides comprehensive monitoring capabilities for tracking the status, activity, and performance of your zombie network.</p>
                 
                 <div class="card">
                     <h3>Monitoring Interface</h3>
@@ -2237,7 +2631,7 @@ Select option: _</div>
                 </div>
                 
                 <h2>Cryptographic Foundation</h2>
-                <p>The NexusC2 framework implements a multi-layered cryptographic architecture that ensures confidentiality, integrity, and authenticity throughout all communications between the command server and distributed agents.</p>
+                <p>The C2Matrix framework implements a multi-layered cryptographic architecture that ensures confidentiality, integrity, and authenticity throughout all communications between the command server and distributed agents.</p>
                 
                 <div class="card">
                     <h3>Cryptographic Protocol Stack</h3>
@@ -2403,7 +2797,7 @@ Select option: _</div>
         <span class="code-keyword">return</span> []</code></pre>
                 
                 <h2>Secure Session Management</h2>
-                <p>The NexusC2 framework implements secure session management with automatic expiration and proactive monitoring:</p>
+                <p>The C2Matrix framework implements secure session management with automatic expiration and proactive monitoring:</p>
                 
                 <div class="card">
                     <h3>Session Security Features</h3>
@@ -2488,7 +2882,7 @@ Select option: _</div>
                 </div>
                 
                 <h2>Operational Security Architecture</h2>
-                <p>The NexusC2 framework implements a comprehensive suite of stealth techniques designed to minimize detection footprint while maintaining operational reliability.</p>
+                <p>The C2Matrix framework implements a comprehensive suite of stealth techniques designed to minimize detection footprint while maintaining operational reliability.</p>
                 
                 <div class="card">
                     <h3>Multi-Layered Stealth Strategy</h3>
@@ -2728,7 +3122,7 @@ Select option: _</div>
                 </div>
                 
                 <div class="alert alert-warning">
-                    <strong>Important Note:</strong> The stealth techniques implemented in NexusC2 are designed for legitimate security testing and authorized penetration testing only. Their implementation should comply with all applicable security testing guidelines and legal requirements.
+                    <strong>Important Note:</strong> The stealth techniques implemented in C2Matrix are designed for legitimate security testing and authorized penetration testing only. Their implementation should comply with all applicable security testing guidelines and legal requirements.
                 </div>
             </section>
             
@@ -2743,7 +3137,7 @@ Select option: _</div>
                 </div>
                 
                 <h2>Legal Authorization Requirements</h2>
-                <p>Prior to deploying the NexusC2 framework in any environment, comprehensive legal authorization must be secured:</p>
+                <p>Prior to deploying the C2Matrix framework in any environment, comprehensive legal authorization must be secured:</p>
                 
                 <div class="card">
                     <h3>Authorization Documentation Requirements</h3>
@@ -2781,7 +3175,7 @@ Select option: _</div>
                 </div>
                 
                 <h2>Regulatory Compliance Considerations</h2>
-                <p>The deployment of NexusC2 may intersect with various regulatory frameworks, each imposing specific compliance requirements:</p>
+                <p>The deployment of C2Matrix may intersect with various regulatory frameworks, each imposing specific compliance requirements:</p>
                 
                 <div class="card">
                     <h3>Applicable Regulatory Frameworks</h3>
@@ -2797,7 +3191,7 @@ Select option: _</div>
                 </div>
                 
                 <h2>Enterprise Deployment Guidelines</h2>
-                <p>Organizations deploying NexusC2 for legitimate security testing should implement these procedural safeguards:</p>
+                <p>Organizations deploying C2Matrix for legitimate security testing should implement these procedural safeguards:</p>
                 
                 <div class="card">
                     <h3>Operational Risk Management</h3>
@@ -2811,7 +3205,7 @@ Select option: _</div>
                 </div>
                 
                 <h2>Data Handling Considerations</h2>
-                <p>The NexusC2 framework may encounter sensitive data during testing operations, requiring specific controls:</p>
+                <p>The C2Matrix framework may encounter sensitive data during testing operations, requiring specific controls:</p>
                 
                 <div class="card">
                     <h3>Data Protection Controls</h3>
@@ -2825,7 +3219,7 @@ Select option: _</div>
                 </div>
                 
                 <h2>International Legal Considerations</h2>
-                <p>Cross-border deployment of NexusC2 introduces additional legal complexities:</p>
+                <p>Cross-border deployment of C2Matrix introduces additional legal complexities:</p>
                 
                 <div class="alert alert-warning">
                     <strong>Multi-Jurisdictional Complexity:</strong> When testing spans multiple legal jurisdictions, the most stringent applicable legal standards from all relevant jurisdictions should be applied to the entire operation.
@@ -2842,7 +3236,7 @@ Select option: _</div>
                 </div>
                 
                 <h2>Contractual Framework</h2>
-                <p>Implement a robust contractual framework for NexusC2 deployment that includes:</p>
+                <p>Implement a robust contractual framework for C2Matrix deployment that includes:</p>
                 
                 <div class="card">
                     <h3>Essential Contract Elements</h3>
@@ -2861,11 +3255,11 @@ Select option: _</div>
             <section id="configuration" class="section">
                 <div class="section-header">
                     <h1>Configuration Options</h1>
-                    <p class="subtitle">Enterprise-grade configuration management for the NexusC2 framework</p>
+                    <p class="subtitle">Enterprise-grade configuration management for the C2Matrix framework</p>
                 </div>
                 
                 <h2>Configuration Architecture</h2>
-                <p>The NexusC2 framework implements a comprehensive configuration management system with centralized control, hierarchical inheritance, and secure storage.</p>
+                <p>The C2Matrix framework implements a comprehensive configuration management system with centralized control, hierarchical inheritance, and secure storage.</p>
                 
                 <div class="card">
                     <h3>Configuration Hierarchy</h3>
@@ -3115,7 +3509,7 @@ Select option: _</div>
             <section id="command-reference" class="section">
                 <div class="section-header">
                     <h1>Command Reference</h1>
-                    <p class="subtitle">Complete reference for NexusC2 commands and APIs</p>
+                    <p class="subtitle">Complete reference for C2Matrix commands and APIs</p>
                 </div>
                 
                 <h2>Server API Endpoints</h2>
@@ -3325,45 +3719,45 @@ Options:
             <section id="ethics" class="section">
                 <div class="section-header">
                     <h1>Ethical Usage Guidelines</h1>
-                    <p class="subtitle">Understanding the ethical and legal responsibilities when using NexusC2</p>
+                    <p class="subtitle">Understanding the ethical and legal responsibilities when using C2Matrix</p>
                 </div>
                 
                 <div class="alert alert-danger">
-                    <strong>Important Notice:</strong> NexusC2 is developed for educational purposes, legitimate security research, and authorized penetration testing only. Misuse of this framework could violate laws in your jurisdiction.
+                    <strong>Important Notice:</strong> C2Matrix is developed for educational purposes, legitimate security research, and authorized penetration testing only. Misuse of this framework could violate laws in your jurisdiction.
                 </div>
                 
                 <h2>Legitimate Usage Scenarios</h2>
                 
                 <div class="card">
                     <h3>Security Research</h3>
-                    <p>Using NexusC2 to research and develop defenses against command and control systems is a legitimate use case. This includes studying attack patterns, communication methods, and evasion techniques to improve detection capabilities.</p>
+                    <p>Using C2Matrix to research and develop defenses against command and control systems is a legitimate use case. This includes studying attack patterns, communication methods, and evasion techniques to improve detection capabilities.</p>
                 </div>
                 
                 <div class="card">
                     <h3>Authorized Penetration Testing</h3>
-                    <p>NexusC2 can be used during authorized penetration tests with explicit written permission from the target organization. This simulates real-world threat actors to identify security weaknesses.</p>
+                    <p>C2Matrix can be used during authorized penetration tests with explicit written permission from the target organization. This simulates real-world threat actors to identify security weaknesses.</p>
                 </div>
                 
                 <div class="card">
                     <h3>Educational Environments</h3>
-                    <p>Using NexusC2 in controlled educational environments like cybersecurity courses, capture-the-flag competitions, or training exercises where all participants are aware of the activity.</p>
+                    <p>Using C2Matrix in controlled educational environments like cybersecurity courses, capture-the-flag competitions, or training exercises where all participants are aware of the activity.</p>
                 </div>
                 
                 <h2>Prohibited Usage</h2>
                 
                 <div class="card">
                     <h3>Unauthorized Access</h3>
-                    <p>Using NexusC2 to access systems without explicit permission from the system owner is illegal under computer crime laws in most jurisdictions.</p>
+                    <p>Using C2Matrix to access systems without explicit permission from the system owner is illegal under computer crime laws in most jurisdictions.</p>
                 </div>
                 
                 <div class="card">
                     <h3>Malicious Intent</h3>
-                    <p>Using NexusC2 with the intent to damage systems, steal data, disrupt services, or otherwise cause harm is strictly prohibited.</p>
+                    <p>Using C2Matrix with the intent to damage systems, steal data, disrupt services, or otherwise cause harm is strictly prohibited.</p>
                 </div>
                 
                 <div class="card">
                     <h3>DDoS Attacks</h3>
-                    <p>While NexusC2 includes DDoS capabilities for testing, using these features against unauthorized targets is illegal and unethical.</p>
+                    <p>While C2Matrix includes DDoS capabilities for testing, using these features against unauthorized targets is illegal and unethical.</p>
                 </div>
                 
                 <h2>Best Practices</h2>
@@ -3394,7 +3788,7 @@ Options:
             <section id="troubleshooting" class="section">
                 <div class="section-header">
                     <h1>Troubleshooting</h1>
-                    <p class="subtitle">Common issues and solutions for the NexusC2 framework</p>
+                    <p class="subtitle">Common issues and solutions for the C2Matrix framework</p>
                 </div>
                 
                 <h2>Server Issues</h2>
@@ -3543,184 +3937,137 @@ logging.basicConfig(
             
         </main>
     </div>
-
-<!-- HTML modifications for branding change -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Apply the custom CSS
-        const customStyles = document.createElement('style');
-        customStyles.innerHTML = `/* Styles will be included here from the CSS artifact */`;
-        document.head.appendChild(customStyles);
-        
-        // Change page title
-        document.title = "NexusC2 - Advanced Command & Control Framework";
-        
-        // Replace NexusC2 with NexusC2 throughout the document
-        document.body.innerHTML = document.body.innerHTML.replace(/NexusC2/g, "NexusC2");
-        document.body.innerHTML = document.body.innerHTML.replace(/C2<span>Matrix<\/span>/g, "Nexus<span>C2</span>");
-        
-        // Update header logo
-        const headerLogo = document.querySelector('.header-logo');
-        if (headerLogo) {
-            headerLogo.innerHTML = "Nexus<span>C2</span>";
-        }
-        
-        // Add blood drip animation to the header
-        const header = document.querySelector('.header');
-        if (header) {
-            const bloodDrip = document.createElement('div');
-            bloodDrip.className = 'blood-drip';
-            bloodDrip.innerHTML = `
-                <div class="drip drip1"></div>
-                <div class="drip drip2"></div>
-                <div class="drip drip3"></div>
-            `;
-            header.appendChild(bloodDrip);
+    
+    <script>
+        // Simple navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
             
-            // Add blood drip CSS
-            const bloodDripStyles = document.createElement('style');
-            bloodDripStyles.innerHTML = `
-                .blood-drip {
-                    position: absolute;
-                    top: 100%;
-                    left: 0;
-                    width: 100%;
-                    height: 15px;
-                    z-index: 1000;
-                    pointer-events: none;
-                }
-                .drip {
-                    position: absolute;
-                    top: -5px;
-                    width: 8px;
-                    background-color: #ff0000;
-                    border-radius: 0 0 4px 4px;
-                    animation: drip 10s infinite;
-                }
-                .drip1 {
-                    left: 20%;
-                    height: 15px;
-                    animation-delay: 2s;
-                }
-                .drip2 {
-                    left: 45%;
-                    height: 10px;
-                    animation-delay: 5s;
-                }
-                .drip3 {
-                    left: 75%;
-                    height: 12px;
-                    animation-delay: 8s;
-                }
-                @keyframes drip {
-                    0% { height: 0; opacity: 0; }
-                    30% { height: 15px; opacity: 0.7; }
-                    60% { height: 15px; opacity: 0.7; }
-                    100% { height: 0; opacity: 0; top: 15px; }
-                }
-            `;
-            document.head.appendChild(bloodDripStyles);
-        }
-        
-        // Add flicker effect to section titles
-        const sectionTitles = document.querySelectorAll('.section-header h1');
-        sectionTitles.forEach(title => {
-            title.classList.add('flicker-text');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links and sections
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    sections.forEach(s => s.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Show corresponding section
+                    const sectionId = this.getAttribute('data-section');
+                    document.getElementById(sectionId).classList.add('active');
+                    
+                    // Close mobile menu if open
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('nav').classList.remove('open');
+                    }
+                });
+            });
+            
+            // Mobile menu toggle
+            const navToggle = document.querySelector('.nav-toggle');
+            const nav = document.getElementById('nav');
+            
+            if (navToggle) {
+                navToggle.addEventListener('click', function() {
+                    nav.classList.toggle('open');
+                });
+            }
+            
+            // Handle nav buttons in content
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const sectionId = this.getAttribute('data-section');
+                    const targetLink = document.querySelector(`.nav-link[data-section="${sectionId}"]`);
+                    
+                    if (targetLink) {
+                        targetLink.click();
+                    }
+                });
+            });
+            
+            // Dark mode toggle
+            const darkModeToggle = document.querySelector('.dark-mode-toggle');
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', function() {
+                    document.body.classList.toggle('light-mode');
+                    
+                    if (document.body.classList.contains('light-mode')) {
+                        this.innerHTML = '<span class="icon-sun"></span>';
+                    } else {
+                        this.innerHTML = '<span class="icon-moon"></span>';
+                    }
+                });
+            }
+            
+            // Demo run buttons
+            const runButtons = document.querySelectorAll('.demo-header .btn');
+            runButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const demo = this.closest('.interactive-demo');
+                    const output = demo.querySelector('.demo-output');
+                    
+                    if (output) {
+                        // Add progress bar animation
+                        const progressBar = document.createElement('div');
+                        progressBar.className = 'progress-bar';
+                        demo.querySelector('.demo-content').appendChild(progressBar);
+                        
+                        // Simulate running the demo
+                        output.style.opacity = '0';
+                        setTimeout(() => {
+                            output.style.opacity = '1';
+                        }, 1000);
+                        
+                        // Remove progress bar after animation
+                        setTimeout(() => {
+                            progressBar.remove();
+                        }, 6000);
+                    }
+                });
+            });
+            
+            // Copy code buttons
+            const codeBlocks = document.querySelectorAll('pre');
+            codeBlocks.forEach(block => {
+                // Create header with copy button
+                const header = document.createElement('div');
+                header.className = 'code-header';
+                
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.innerHTML = '<span class="icon-copy"></span> Copy';
+                
+                header.appendChild(copyButton);
+                
+                // Insert header before code block
+                block.parentNode.insertBefore(header, block);
+                
+                // Add click handler
+                copyButton.addEventListener('click', function() {
+                    const code = block.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        copyButton.innerHTML = '<span class="icon-copy"></span> Copied!';
+                        setTimeout(() => {
+                            copyButton.innerHTML = '<span class="icon-copy"></span> Copy';
+                        }, 2000);
+                    });
+                });
+            });
+            
+            // Dropdown toggles
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    this.parentNode.classList.toggle('open');
+                });
+            });
         });
-        
-        // Add flicker effect CSS
-        const flickerStyles = document.createElement('style');
-        flickerStyles.innerHTML = `
-            .flicker-text {
-                animation: textFlicker 8s infinite alternate;
-            }
-            @keyframes textFlicker {
-                0% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.3); }
-                5% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.3); }
-                6% { text-shadow: 0 0 15px rgba(255, 0, 0, 0.7); }
-                7% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.3); }
-                80% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.3); }
-                84% { text-shadow: 0 0 2px rgba(255, 0, 0, 0.1); }
-                85% { text-shadow: 0 0 15px rgba(255, 0, 0, 0.7); }
-                86% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.3); }
-                87% { text-shadow: 0 0 15px rgba(255, 0, 0, 0.7); }
-                92% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.3); }
-                100% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.3); }
-            }
-        `;
-        document.head.appendChild(flickerStyles);
-        
-        // Update warning and danger alerts to be more ominous
-        const alerts = document.querySelectorAll('.alert');
-        alerts.forEach(alert => {
-            if (alert.classList.contains('alert-warning') || alert.classList.contains('alert-danger')) {
-                const strongElement = alert.querySelector('strong');
-                if (strongElement) {
-                    strongElement.innerHTML = '☠️ ' + strongElement.innerHTML;
-                }
-            }
-        });
-        
-        // Add terminal cursor effect to code blocks
-        const codeBlocks = document.querySelectorAll('pre code');
-        codeBlocks.forEach(code => {
-            const cursorSpan = document.createElement('span');
-            cursorSpan.className = 'terminal-cursor';
-            code.appendChild(cursorSpan);
-        });
-        
-        // Add terminal cursor CSS
-        const cursorStyles = document.createElement('style');
-        cursorStyles.innerHTML = `
-            .terminal-cursor {
-                display: inline-block;
-                width: 8px;
-                height: 16px;
-                background-color: #ff3333;
-                margin-left: 5px;
-                animation: blink 1s step-end infinite;
-            }
-            @keyframes blink {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0; }
-            }
-        `;
-        document.head.appendChild(cursorStyles);
-        
-        const overviewCard = document.querySelector('#overview .card p:first-child');
-        if (overviewCard) {
-            overviewCard.innerHTML = "NexusC2 is a powerful command and control framework designed for dominating networks and establishing persistent control channels. The framework provides a comprehensive arsenal for creating, deploying, and managing a network of client systems ('zombies') that respond to your every command.";
-        }
-        
-        const overviewCard2 = document.querySelector('#overview .card p:nth-child(2)');
-        if (overviewCard2) {
-            overviewCard2.innerHTML = "With military-grade encryption, advanced evasion capabilities, and intuitive control interfaces, NexusC2 grants you unprecedented power over compromised systems. The framework excels at maintaining persistent access while operating in the shadows.";
-        }
-        
-        // Add a sinister glow effect to buttons
-        const buttonStyles = document.createElement('style');
-        buttonStyles.innerHTML = `
-            .btn {
-                position: relative;
-                overflow: hidden;
-            }
-            .btn::after {
-                content: '';
-                position: absolute;
-                top: -50%;
-                left: -50%;
-                width: 200%;
-                height: 200%;
-                background: radial-gradient(circle, rgba(255,0,0,0.3) 0%, rgba(255,0,0,0) 70%);
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
-            .btn:hover::after {
-                opacity: 1;
-            }
-        `;
-        document.head.appendChild(buttonStyles);
-    });
-</script>
+    </script>
 </body>
 </html>
