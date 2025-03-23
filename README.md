@@ -1,3 +1,6 @@
+> Note: Adding and fixing a few errors to/in the framework before i upload it here. Please wait.
+---
+
 # NexusC2 Framework
 
 ## Enterprise-Grade Command & Control Infrastructure
